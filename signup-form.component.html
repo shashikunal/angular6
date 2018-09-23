@@ -1,0 +1,28 @@
+<form [formGroup]="form">
+    <div class="form-group">
+        <label for="username">User name</label>
+        <input 
+         formControlName="username"
+         type="text"
+         class="form-control"
+         id="username">
+         <div class="alert alert-danger" *ngIf="username.touched && username.invalid">
+             <div *ngIf="username.errors.required">This field is Required</div>
+             <div *ngIf="username.errors.minlength">This field  Should be minimum 3 characters</div>
+         </div>
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input  formControlName="password" 
+         type="text"
+         class="form-control" 
+         id="password">
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="submit" class="btn btn-primary">
+    </div>
+
+
+</form>
