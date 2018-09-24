@@ -1,92 +1,102 @@
-import { Component } from '@angular/core';
-import { CourseService } from './course.service';
+import { CourseService } from './course.servie';
+import { Component } from "@angular/core";
 
 @Component({
     selector : 'courses',
     template :`
-      <h1>{{title}}</h1>
 
-      <ul class="list-group">
-            <li class="list-group-item" *ngFor="let course of courses; index as i">{{i + ":"}}{{course}}</li>
-      </ul>
-     
-    <form>
-       <div class="form-group">
-            <input type="sumit" class="btn btn-primary" value="addplayer" (click)="AddPlayers()" />
-       </div>
-    </form>
+         <div class="container">
+           
+         <div class="form-group">
+           <button class="btn btn-primary" (click)="addUsers()">add users</button>
+         </div>
+
+            <table class="table table-bordered">
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>company</th>
+                    <th>Remove</th>
+                </tr>
+                 <tr *ngFor="let user of users; index as i">
+                       
+                         <td>{{i}}</td>
+                         <td>{{user.name}}</td>
+                         <td>{{user.age}}</td>
+                         <td>{{user.company}}</td>
+                         <td (click)="removeUser(user)">Remove</td>
+                        
+                 </tr>
+
+            </table> 
+    
+
+        
+       
+        <input type="text" class="form-control col-md-6 col-lg-6"  #email (keyup.enter)="onSave(email.value) "/> 
+
+           <input type="text" [(ngModel)]="name" class="form-control" />
+          
+            <h1>{{ name }} </h1>
 
 
-      <table class="table table-bordered">
-            <tr>
-                <th>name</th>
-                <th>age</th>
-                <th>runs</th>
-                <th>remove</th>
-            </tr>
-            <tr *ngFor="let player of favplayers">
-              <td> {{player.name}}</td>
-              <td> {{player.age}}</td>
-              <td> {{player.runs}}</td>
-              <td class="btn btn-danger btn-xs" (click)="remove(player)">X</td>
-            </tr>
-      </table>
+           
+            <div *ngIf="languages.length > 0; then languageList  else nolanguages"></div> 
 
-    <div [ngClass]="{available:isAvailable , unavailable:!isAvailable}">hello this is text</div>
+            <ng-template #languageList>
+                languages are here
+             </ng-template>
+         
+
+           <ng-template #nolanguages>
+                no languages are here
+          </ng-template>
+             
+
+         <div [ngSwitch]="color">
+             <p *ngSwitchCase="'red'">Red color is applying</p>
+             <p *ngSwitchCase="'green'"> green color is applying</p>
+             <p *ngSwitchCase="'blue'"> blue color is appying </p> 
+             <p *ngSwitchDefault >no color is here</p>
+         </div>
 
 
-    `,
-    styles : [`
-        .available {
-            color:green;
-        }
-        .unavailable {
-            color:red;
-        }
-    `]
+
+        </div>
+    `
 })
 
-export class courseComponent{
+export class courseComponent {
+    users;
+    constructor(service:CourseService){
+      this.users = service.getCourses()
+    }
+
+    color = "purple";
+    languages = [1 , 1];
+
+     
+    onSave(email){
+        console.log('Enter was Pressed through angular method' , email);
+    }  
+    
+
+    
+
+
+
+    colSpan  = 2;
+    isActive = false;
+
+
+
+    
+   
   
-    isAvailable = false;
+
+    
 
 
-  title = "This is an angular application";
-  courses; 
-
-  constructor(service:CourseService){
-     this.courses = service.getCourse();
-  }
-  color = "blue1";
-
-  favplayers = [
-      {
-        name:"sachin",
-        age : 30,
-        runs : 35000
-      },
-
-      {
-          name : "dravid",
-          age : 25,
-          runs : 20000
-      }
-]
-
-
-AddPlayers(){
-    this.favplayers.push({
-        name:"lara",
-        age:30,
-        runs:30000
-
-    });
-}
-
-remove(player){
-    let removeitem =  this.favplayers.indexOf(player);
-    this.favplayers.splice(removeitem , 1)
-
-}
 
 }
