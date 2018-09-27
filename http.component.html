@@ -7,12 +7,14 @@
           <input type="text" class="form-control"  #title (keyup.enter)="createData(title)"/>
         </div>
       </form>
-      
+
+
+
   <ul class="list-group">
     <li class="list-group-item" *ngFor="let post of posts">
-        {{post.userId}}
+       <button class="btn btn-danger" (click)="remove(post)">delete</button>
         {{post.title}}
-        {{post.body}}
+        
 
     </li>
   </ul>

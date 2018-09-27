@@ -22,7 +22,16 @@ export class HttpComponent  {
            post['id']= response.json().id;
            this.posts.splice(0 , 0 , post)
           });
+    };
+
+    remove(post){
+      this.http.delete(this.url + "/" + post.id).subscribe((response)=>{
+             let index = this.posts.indexOf(post);
+             this.posts.splice(index , 1) 
+      })
     }
+
+
 
   
 }
